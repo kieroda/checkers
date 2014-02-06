@@ -35,7 +35,7 @@ const int MUT_STD_DEV = .75;	//The standard deviation of the normal distribution
 
 class NeuralNet {
 public:
-	//Contstruct a neural net with the given layers
+	//Contstruct a neural net with the given layer setup (size array holds layer sizes, nLayers is number of layers)
 	NeuralNet(int* size, int nLayers): _nLayers(nLayers){
 		std::random_device rd;	//Create random device
 		std::mt19937 el(rd());	//Use 32 bit mersenne twister
