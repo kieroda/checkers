@@ -53,7 +53,7 @@ public:
 			for(int i=0; i<_size[k+1]; i++){		//Then for each element of this array,
 				_weights[k][i] = new double[_size[k]];	//create an array the size of layer k to fill with weights.
 				for(int j=0; j<_size[k]; j++)		//Then, for each element in that array,
-					_weights[k][i][j] = 0.;//udist(el);	//fill with a random number from our uniform distribution
+					_weights[k][i][j] = udist(el);	//fill with a random number from our uniform distribution
 			}
 		}
 
@@ -90,23 +90,23 @@ public:
 
 	//Evaluate the network with the given inputs
 	double* evaluate(double* input){
-
 		//Grab input values and store in 1st layer
 		for(int i=0; i<_size[0]; i++)
 			_values[0][i]=input[i];
 
-		//Evaluate through each layer of the neural net (skipping input layer)
+		//Evaluate each layer of the neural net (skipping input layer)
 		for(int k=1; k<_nLayers; k++){
+			//Go through each neuron on the layer
 			for(int i=0; i<_size[k]; i++){
 				
 				double temp = 0.0;
 
-				//Sum each input*weight product
+				//Go through each neuron on the previous layer as an input
 				for(int j=0; j<_size[k-1]; j++){
-					temp+=_weights[k-1][i][j]*_values[k-1][j];
+					temp+=_weights[k-1][i][j]*_values[k-1][j];	//Sum each input*weight product
 				}
 
-				//Convert to the range (-1.0,1.0) using a simplification of sigmoid function
+				//Convert to the range (-1.0,1.0) using a simple function rather than sigmoid (for speed)
 				temp = temp/(1+abs(temp));
 
 				//Save value in output array
@@ -116,21 +116,6 @@ public:
 
 		//Return a pointer to output neuron values
 		return _values[_nLayers-1];
-	}
-
-	//Mutate all weights in the set
-	void mutate(){
-		std::random_device rd;	//Create random device
-		std::mt19937 el(rd());	//Use 32 bit mersenne twister
-		std::normal_distribution<double> ndist(0,MUT_STD_DEV);	//create a normal distribution with mean 0 and the set std dev
-
-		//Set up weight arrays (uses uniform distribution)
-		for(int k=0; k<_nLayers-1; k++){
-			for(int i=0; i<_size[k+1]; i++){
-				for(int j=0; j<_size[k]; j++)
-					_weights[k][i][j] += ndist(el);
-			}
-		}
 	}
 	
 	//Destructor (not sure if I used too many deletes)
