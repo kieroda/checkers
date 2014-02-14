@@ -31,7 +31,7 @@
 #include <iostream>
 
 const int WT_AMP = 1.0;	//Initial weights will be set using the distribution [-WT_AMP,WT_AMP]
-const int MUT_STD_DEV = .75;	//The standard deviation of the normal distribution used for mutations
+const float MUT_STD_DEV = .002;	//The standard deviation of the normal distribution used for mutations
 
 class NeuralNet {
 public:
@@ -116,6 +116,27 @@ public:
 
 		//Return a pointer to output neuron values
 		return _values[_nLayers-1];
+	}
+
+	//Mutate all weights in the set
+	void mutate(){
+		std::random_device rd;	//Create random device
+		std::mt19937 el(rd());	//Use 32 bit mersenne twister
+		std::normal_distribution<double> ndist(0,MUT_STD_DEV);	//create a normal distribution with mean 0 and the set std dev
+
+		//Set up weight arrays (uses uniform distribution)
+		for(int k=0; k<_nLayers-1; k++){
+			//std::cout<<"Layer " << k+1 << " Weights\n";
+			for(int i=0; i<_size[k+1]; i++){
+				//std::cout<<"Node " << i << ": ";
+				for(int j=0; j<_size[k]; j++){
+					_weights[k][i][j] += ndist(el);
+					//std::cout <<ndist(el) << " ";
+				}
+				//std::cout<<"\n";
+			}
+			//std::cout<<"\n";
+		}
 	}
 	
 	//Destructor (not sure if I used too many deletes)
