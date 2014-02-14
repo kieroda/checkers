@@ -126,16 +126,11 @@ public:
 
 		//Set up weight arrays (uses uniform distribution)
 		for(int k=0; k<_nLayers-1; k++){
-			//std::cout<<"Layer " << k+1 << " Weights\n";
 			for(int i=0; i<_size[k+1]; i++){
-				//std::cout<<"Node " << i << ": ";
 				for(int j=0; j<_size[k]; j++){
 					_weights[k][i][j] += ndist(el);
-					//std::cout <<ndist(el) << " ";
 				}
-				//std::cout<<"\n";
 			}
-			//std::cout<<"\n";
 		}
 	}
 	
