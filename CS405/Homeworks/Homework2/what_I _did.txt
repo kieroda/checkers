@@ -1,0 +1,5 @@
+I went through and made sure caching was taken into account in all my array accessing.
+
+Next I set my compiler optimizations to level 2, and got about 400k evaluations and was happy with that.
+
+Finally I added a mutator function.
