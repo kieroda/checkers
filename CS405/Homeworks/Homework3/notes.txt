@@ -1,0 +1,5 @@
+NOTES ON BOARD REPRESENTATION:
+
+Finally got something working for this. It has worked for all the board layouts I have tried,
+but there might still be bugs, the math was a bit confusing to do.  I am happy with it and it
+should be very simple from here to send boards to the neural net!
